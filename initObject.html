@@ -1,0 +1,85 @@
+<script>
+    //1
+    'use strict';
+    //2
+    function getLogin() {
+    var login = '';
+    var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+    for (var i = 0; i < 5; i++) {
+    login += possible.charAt(Math.floor(Math.random() * possible.length));
+}
+    return login;
+}
+    //3
+    // console.log(getLogin());
+    function getPassword() {
+    var password = '';
+    var possible =
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_-';
+    for (var i = 0; i < 5; i++) {
+    password += possible.charAt(Math.floor(Math.random() * possible.length));
+}
+    return password;
+}
+    // console.log(getPassword());
+    //4
+    //5
+    let user = {
+    name: undefined,
+    sureName: undefined,
+    age: undefined,
+    address: undefined,
+    level: undefined,
+    isAdmin: undefined,
+    login: undefined,
+    password: undefined,
+    key: undefined,
+};
+    //6
+    function initUser(objInit) {
+    let {
+    name = prompt('Введите имя'),
+    sureName = prompt('Введите фамилию'),
+    age = +prompt('Введите возраст'),
+    address= prompt('Введите адрес'),
+    level = +prompt('Введите курс'),
+    isAdmin= confirm('Вы администратор?'),
+    login= getLogin(),
+    password = getPassword(),
+    key= Math.floor(Math.random() * 1000),
+} = objInit;
+
+    //console.log(this);
+    if (this) {
+    this.name = name;
+    this.sureName = sureName;
+    this.age = age;
+    this.address = address;
+    this.level = level;
+    this.isAdmin = isAdmin;
+    this.login = login;
+    this.password = password;
+    this.key = key;
+    console.log(this);
+} else {
+    console.log('Вызов вне объекта');
+}
+}
+    let test = {
+    name: 'Иван',
+    sureName: 'Иванов',
+    age: 21,
+    address: 'Ленина',
+    level: 5,
+    isAdmin: false,
+    login: 'asdad',
+    password: 'adad',
+    key: 'dfsfsf',
+};
+    //7
+    user.init = initUser;
+    //8
+    user.init(test);
+
+    initUser(test);
+</script>
