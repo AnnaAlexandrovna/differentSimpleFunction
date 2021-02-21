@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello World</title>
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+
+class Bomb extends React.Component{
+
+  constructor(props){
+    super(props);
+    this.state = {
+      current: props.start,
+      bam: 0,
+      start: props.start,
+      end: props.end,
+      delay: props.delay
+    };
+   }
+
+  componentDidMount() {
+    this.timerId = setInterval(()=>{this.bombTimer();}, this.state.delay)
+  }
+
+  bombTimer(){
+    if (this.state.end<this.state.current) {
+      this.setState(()=> {return this.state.current= this.state.current-1});
+    }
+    else if (this.state.end==this.state.current){
+      clearInterval(this.timerId);
+      this.setState(()=> {return this.state.bam=1;});
+    }
+  }
+
+  render() {
+    if (this.state.bam==0) {
+      return (<h3>Обратный отсчет: {this.state.current}</h3>);
+    } else {
+      return (<h1>Бабах!!!!</h1>);
+    };
+  }
+}
+
+ReactDOM.render(
+  <Bomb start="100" end="0" delay="100"/>,
+  document.getElementById('root')
+);
+
+    </script>
+  </body>
+</html>

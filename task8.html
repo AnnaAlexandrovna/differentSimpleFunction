@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello World</title>
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    .main{
+      border:1px solid #555;
+      position: fixed;
+      width:50%;
+      left:25%;
+       top:25%;
+      box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, .1);
+      font-family: arial;
+      border-radius:5px;
+      background: #eee;
+     }
+
+    .text{
+       margin: 5px;
+       border:1px solid #999999;
+       background: #fff;
+       padding: 5px;
+       border-radius:4px;
+    }
+
+    .date{
+       margin: 5px;
+       border:1px solid #bbbbbb;
+ 
+       border-radius:4px;
+       display: inline-block;
+    }
+
+      .dateText{
+       margin: 5px;
+
+       border-radius:4px;
+       display: inline-block;
+      }
+
+      .dateDate{
+       margin: 5px;
+   
+       border-radius:4px;
+       font-weight: bold;
+       display: inline-block;
+      }
+
+
+      .user{
+       margin: 5px;
+       border:1px solid #red;
+       border-radius:4px;
+       display: inline-block;
+       border:1px solid #bbbbbb;
+    }
+
+      .userName{
+       margin: 5px;
+       border:1px solid #red;
+       border-radius:4px;
+       display: inline-block;
+      }
+
+      .userEmail{
+       margin: 5px;
+    border:1px solid #red;
+       border-radius:4px;
+       display: inline-block;
+      }
+
+  </style>
+  </head>
+
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+
+function Text(props){
+ return (
+      <div className="text">
+        {props.content}
+      </div>
+       );
+}
+
+
+function Date(props) {
+  return (
+      <div className="date">
+        <div className="dateText">Дата:</div>
+        <div className="dateDate">{props.children}</div>
+      </div>
+  );
+}
+
+function User(props) {
+  return (
+        <div className="user">
+        <div className="userName">Имя: <b>{props.name}</b></div>
+        <div className="userEmail">E-mail: <u>{props.email}</u></div>
+      </div>
+  );
+}
+
+function FeedBack(props) {
+  return (
+    <div className="main">
+      <Text content={props.children}/>
+      {props.date}
+      {props.author}
+    </div>
+  );
+}
+
+ReactDOM.render(
+  <FeedBack 
+  date={<Date>21-01-2021 16:58</Date>} 
+  author={<User name="Ivan" email="ivan@mail.ru" />}>
+  Текст отзыва</FeedBack>,
+  document.getElementById('root')
+);
+
+    </script>
+
+  </body>
+</html>

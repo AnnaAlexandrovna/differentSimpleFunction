@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Observer</title>
+</head>
+<body>
+    <div id="d1" data-num="1" style="display:inline-block; border:1px solid red; padding:10px;"onclick="addBlock('d1')">1</div>
+    <div id="d2" data-num="2" style="display:inline-block; border:1px solid red; padding:10px;" onclick="addBlock('d2')">2</div>
+    <div id="d3" data-num="3" style="display:inline-block; border:1px solid red; padding:10px;" onclick="addBlock('d3')" >3</div>
+    <div id="d4" data-num="4" style="display:inline-block; border:1px solid red; padding:10px;" onclick="addBlock('d4')">4</div>
+    <div id="d5" data-num="5" style="display:inline-block; border:1px solid red; padding:10px;" onclick="addBlock('d5')">5</div>
+
+    <script>
+
+      let addBlock = function (id){
+        let elem = document.createElement('div');
+        elem.innerHTML = "Новый элемент";
+        elem.style = "border:1px solid blue; padding:10px;";
+        document.getElementById(id).appendChild(elem);
+      }
+
+      let observer = new MutationObserver(mutationRecords => {
+        console.log("Элемент №" + mutationRecords[0].target.attributes[1].nodeValue + " изменен");
+       });
+
+      observer.observe(d1, {
+        childList: true,
+        subtree: true
+      });
+
+      observer.observe(d2, {
+        childList: true,
+        subtree: true
+      });
+
+      observer.observe(d3, {
+        childList: true,
+        subtree: true
+      });
+
+      observer.observe(d4, {
+        childList: true,
+        subtree: true
+      });
+
+      observer.observe(d5, {
+        childList: true,
+        subtree: true
+      });
+
+    </script>
+</body>
+</html>

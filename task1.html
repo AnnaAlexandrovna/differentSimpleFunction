@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello World</title>
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+       .mainWindow{
+         border:1px solid #555;
+         position: fixed;
+         width:50%;
+         left:25%;
+          top:25%;
+         box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, .1);
+         font-family: arial;
+       }
+
+       .infoPanel{
+          margin: 10px;
+          border:1px solid #eee;
+       }
+
+       .mainText{
+         margin: 5px;
+         text-align: center;
+       }
+
+       .fieldName{
+         width:30%;
+         display: inline-block;
+         margin: 5px;
+      }
+
+       .field{
+         width:60%;
+         padding: 5px;
+         margin: 5px;
+       }
+    </style>
+  </head>
+
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+
+
+      let element =(<div className="mainWindow">
+
+        <div className="infoPanel">
+          <div className="mainText" >Персональные данные</div>
+
+          <div className="infoPanel">
+            <div className="fieldName" >Фамилия:</div>
+            <input className="field"></input>
+          </div>
+
+          <div className="infoPanel">
+            <div className="fieldName" >Имя:</div>
+            <input className="field"></input>
+          </div>
+
+          <div className="infoPanel">
+            <div className="fieldName" >Отчество:</div>
+            <input className="field"></input>
+          </div>
+
+          <div className="infoPanel">
+            <div className="fieldName" >Электронная почта:</div>
+            <input className="field"></input>
+          </div>
+
+          <div className="infoPanel">
+            <div className="fieldName" >Телефон:</div>
+            <input className="field"></input>
+          </div>
+
+          <div className="infoPanel">
+            <div className="fieldName" >   </div>
+            <button className="field">Отправить</button>
+          </div>
+
+        </div>
+      </div>);
+
+
+      ReactDOM.render(
+        element,
+        document.getElementById('root')
+      );
+    </script>
+  </body>
+</html>

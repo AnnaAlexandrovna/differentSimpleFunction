@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello World</title>
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+      form{ border:1px solid #999999; font-family: arial; padding: 10px; border-radius: 10px; width:300px;}
+      input {display: block; width:100%;}
+      .info{text-align: center; font-weight: bold;}
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+
+
+class MyForm extends React.Component {
+
+ constructor(props){
+        super(props);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.state = {fio: "", date: "", isSend: false}
+      }
+
+
+  handleSubmit(event){
+  		event.preventDefault();
+  		this.setState({fio: event.target.fio.value, date: event.target.dr.value, isSend:true});
+	}
+
+  render() {
+  let s ="";
+  if (this.state.isSend){
+  	s = "Было отправлено (ФИО: " + this.state.fio + ", День рождения: " + this.state.date +" )" ;
+	}
+    return (
+      <form onSubmit = {this.handleSubmit}>
+        <label>Ф.И.О:<input  name="fio" type="text" /></label>
+        <label>День рождения:<input  name="dr" type="date" /></label>
+        <br/>
+        <label><input  name="send" type="submit" value="Отправить"/></label>
+        <div className='info'>{s}</div>
+    	</form>
+          );  }
+  }
+
+  ReactDOM.render(<MyForm />, root);
+
+  
+
+    </script>
+
+  </body>
+</html>

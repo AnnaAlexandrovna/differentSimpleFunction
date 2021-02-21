@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello World</title>
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+    .main{
+      width:80%;
+      margin-left:10%;
+      margin-top:50px;
+      border:1px solid #999999;
+      border-radius: 5px;
+      box-shadow: 0px 0px 10px 10px rgba(0,0,0,0.2);
+      padding-top:10px;
+      font-size: 12px;
+      font-family: arial;
+      padding-bottom: 10px;
+    }
+
+    .year{
+      font-family: arial;
+      font-size: 24px;
+      margin-left: 10px;
+      margin-top: 10px;
+    }
+
+    .row{
+      width:98%;
+      margin-left: 1%;
+     }
+
+     .rowHead{
+      width:98%;
+      margin-left: 1%;
+      background: #c0c0c0;
+     }
+
+    .marka{
+      width:40%;
+      border:0px;
+      display: inline-block;
+      text-align: center;
+    }
+
+      .model{
+      width:40%;
+      border:0px;
+      display: inline-block;
+      text-align: center;
+    }
+
+    .count{
+      width:20%;
+      border:0px;
+      display: inline-block;
+      text-align: center;
+    }
+
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+
+      function CarItem(props){
+        let col = [];
+        let s = "a";
+        for(let c in props.car){
+          col[col.length] = <div className = {c} key = {s}>{props.car[c]}</div>
+          s+="s";
+        }
+        if(props.num==0){
+          return (<div className="rowHead">
+          {col}
+          </div>);
+        }else{
+           return (<div className="row">
+          {col}
+          </div>);
+      }
+      
+      }
+
+      function Car(props){
+        let carItems = [];
+        for(let c of props.cars){
+        carItems[carItems.length] = <CarItem key={carItems.length} car={c} num={carItems.length}/>;
+        }
+        return(<div className="main"> <div className="year">январь 2020</div>{carItems}</div>);
+      }
+
+      
+      ReactDOM.render (
+      <Car cars = {[{marka: "Марка", model: "Модель" , count: "Продажи"}, 
+      { marka: "Lada", model: "Granta" , count: 8470 },
+      {marka: "Lada", model: "Vesta" , count: 7506 },
+      {marka: "Kia", model: "Rio" , count: 6258},
+      {marka: "Hyundai", model: "Creta" , count: 5376},
+      {marka: "VW", model: "Polo" , count: 3483}]}/>,
+      document.getElementById('root') 
+      ) 
+    </script>
+
+  </body>
+</html>

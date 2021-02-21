@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello World</title>
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+
+      .main{
+        border:1px solid #555; font-family: arial;
+      }
+
+      .item{
+        margin: 3px;
+        padding: 5px;
+        cursor: pointer;
+      }
+
+         .item_hide{
+        margin: 3px;
+        padding: 5px;
+        cursor: pointer;
+        display: none;
+      }
+
+      .item_selected{
+         margin: 3px;
+        padding: 5px;
+        background: red;
+        color:#fff;
+        cursor: pointer;
+      }
+
+      .item_preselected{
+         margin: 3px;
+        padding: 5px;
+        background: pink;
+        cursor: pointer;
+      }
+
+       .info{
+         margin: 3px;
+        padding: 5px;
+        background: pink;
+        cursor: pointer;
+        font-family: arial;
+        text-align: center;
+        background: #c0c0c0;
+        height: 20px;
+      }
+
+      .delete{
+        float: right;
+        border-radius:5px;
+        border:1px solid #555;
+        background: #fff;
+        color:#000;
+        padding: 2px;
+        font-size: 9px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+
+      class  ListItem extends React.Component {
+
+      constructor(props){
+        super(props);
+        this.over = this.over.bind(this);
+        this.out = this.out.bind(this);
+        this.click = this.click.bind(this);
+        this.hide = this.hide.bind(this);
+      }
+
+      over(e){
+        this.props.over(this.props.id);
+      }
+
+      out(e){
+        this.props.out(this.props.id);
+      }
+
+      click(e){
+        this.props.click(this.props.id);
+      }
+
+      hide(e){
+        this.props.hide(this.props.id);
+      }
+
+
+      render(){
+      let style = "item";
+      if (this.props.preselected == true) style = "item_preselected";
+      if (this.props.selected == true) {
+      style = "item_selected";}
+      if (this.props.isHide == true) {
+      style = "item_hide"};
+        return (<div className={style} onMouseOver={this.over} onMouseOut={this.out} onClick={this.click} >{this.props.i} <div onClick={this.hide} className = "delete">del</div></div>);
+      }
+
+      }
+
+  
+
+     class ShopList extends React.Component{
+
+        constructor(props){
+          super(props);
+          this.state = {selected:null, preselected:null, hide : null};
+          this.over = this.over.bind(this);
+          this.out = this.out.bind(this);
+          this.click = this.click.bind(this);
+          this.hide = this.hide.bind(this);
+          this.items = this.props.items;
+        }
+  
+        over(id){
+          this.setState({preselected:id});
+        }
+
+        click(id){
+          this.setState({selected:id});
+        }
+
+        out(id){
+          this.setState({preselected:id});
+        }
+
+        hide(id){
+          this.setState({hide:id});
+        }
+
+
+        render(){
+        let listItems = [];
+        for(let c of this.items){
+          let selected = (this.state.selected == listItems.length) ? true : false;
+          let preselected = (this.state.preselected == listItems.length) ? true : false;
+          let hide = (this.state.hide == listItems.length) ? true : false;
+          if(this.state.hide!==null){
+            this.items.splice(this.state.hide, 1); 
+            this.state.hide=null;
+            this.state.selected =null;
+            this.state.preselected =null;
+        }
+          listItems[listItems.length] = <ListItem key={c.toString()} i={c} id={listItems.length} selected={selected} preselected={preselected} isHide={hide} over={this.over} out={this.out} click={this.click} hide={this.hide}/>;
+        }
+        if (this.state.selected!==null){
+            let selectedThing=<SelectedThing key={this.items[this.state.selected].toString()} i={this.items[this.state.selected]} id={this.state.selected}/>;
+            return(<div className = "main">{listItems}{selectedThing}</div>);
+        } else return(<div className = "main">{listItems}</div>);
+          }
+      
+      }
+
+      class SelectedThing extends React.Component{
+      constructor(props){
+          super(props);
+        }
+
+      render(){
+      let style = "info";
+        return (<div className={style}> {this.props.id} {this.props.i}</div>);
+      }
+
+      }
+
+      ReactDOM.render(
+      <ShopList items = {["Хлеб", "Молоко", "Сыр", "Масло", "Творог", "Кефир", "Сметана"]}/>,
+      document.getElementById('root')
+      );
+ 
+   
+
+    </script>
+
+  </body>
+</html>
