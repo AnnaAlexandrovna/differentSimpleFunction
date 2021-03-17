@@ -1,0 +1,128 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello World</title>
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+    .lamp{
+      border: 1px solid #555555;
+      border-radius: 50%;
+      width:100px;
+      height: 100px;
+      display: flex;
+      justify-content: center;
+      align-items:center;
+      flex-direction: column;
+      font-size:20px; 
+      font-family: arial;
+      color:#555;
+      margin: 5px;
+    }
+
+
+
+    .simofor{
+      display: flex;
+      justify-content: center;
+      align-items:center;
+      flex-direction: column;
+      width:100%;
+      height:100%;
+    }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+
+
+
+class Lamp extends React.Component {
+  constructor(props) {
+    super(props);
+    this.ref_link = React.createRef();
+    this.state={background: props.background,  mode:props.mode};
+   }
+
+   componentDidMount(){
+
+   setInterval(()=>{
+    
+ }, 2000);
+ }
+ 
+  render() {
+  let colorOfDiv = '#ffffff';
+  if (this.props.mode){
+    colorOfDiv = this.props.background;
+  }
+      return (<div className="lamp" style ={{backgroundColor : colorOfDiv}} ref = {this.ref_link}></div>);
+  }
+}
+
+
+class  Simofor extends React.Component {
+
+constructor(props){
+  super(props);
+  this.ref_links = [];
+  for(let i = 0; i< this.props.lamps.length; i++){
+    this.ref_links.push(React.createRef());
+  }
+  this.state={active: 0};
+}
+
+componentDidMount(){
+
+  console.log(this.ref_links[1].current);
+   setInterval(()=>{
+    if (this.state.active< this.props.lamps.length-1) {
+    this.state.active++;
+
+  } else{
+    this.state.active = 0;
+}
+ for(let i = 0; i< this.props.lamps.length; i++){
+    if (i==this.state.active){
+      this.ref_links[i].current.state.mode = true;
+    } else {
+      this.ref_links[i].current.state.mode = false;
+    }
+    //console.log("i - " + i + "; this.ref_links[i].current.state.mode -"+ this.ref_links[i].current.state.mode);  
+  }
+  
+  this.forceUpdate();
+ }, 2000);
+
+
+}
+
+  render() {
+
+    return   (
+        <div className='simofor'>
+        {this.props.lamps.map((elem,index)=>{
+          let mode;
+          if (index == this.state.active){
+            mode=true;
+          } else {
+          mode=false;
+        }
+          return <Lamp key={index} background={elem} mode={mode} ref = {this.ref_links[index]}></Lamp>
+        })}
+        </div>
+    );
+  }
+}
+
+      ReactDOM.render(
+      <Simofor lamps={['red','yellow','green']}/>,
+      document.getElementById('root')
+      );
+
+    </script>
+  </body>
+</html>
