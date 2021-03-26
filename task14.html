@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Выключен</title>
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+    .switchMain{
+      width:80px;
+      border:1px solid #555555;
+      border-radius: 5px;
+      float: left;
+      cursor: pointer;
+      box-shadow: inset 2px 2px 2px 2px rgba(0, 0, 0, 0.2);
+      background: rgba(0, 0, 0, 0.1);
+ 
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+
+    }
+
+    .switchToogleLeft{
+      width:30px;
+      height:25px;
+      margin: 3px;
+      border: 1px solid #555555;
+      border-radius: 5px;
+      float: left;
+      text-align: center;
+      font-size: 10px;
+      padding-top: 12px;
+      font-family: arial;
+      background: #ffffff;
+      box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.2);
+    }
+
+    .switchToogleRight{
+      width:30px;
+      height:25px;
+      margin: 3px;
+      border: 1px solid #555555;
+      border-radius: 5px;
+      float: right;
+      text-align: center;
+      font-size: 10px;
+      padding-top: 12px;
+      font-family: arial;
+      background: #ffffff;
+      box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.2);
+    }
+
+
+      .info{
+        position: absolute;
+        top:100px;
+        border-radius: 20px;
+        border:1px solid grey;
+        padding: 10px;
+        font-family: arial;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+
+let GM = React.createContext({on: "Выключен"});
+function Switch(props){
+const [on, setOn]=React.useState(props.on);
+let t;
+
+React.useEffect(()=>{
+  document.title=on?"Включен":"Выключен";
+});
+
+      return (
+			 <>
+			
+              {(on)?
+			  <>
+              <div className='switchMain' onClick={()=>{setOn(!on); }}><div className='switchToogleLeft'>Вкл</div></div>
+			  <GM.Provider value = {{on: "Включен"}}>
+				<div><Info/></div>
+			 </GM.Provider>
+			 </>
+			  :
+			  <>
+              <div className='switchMain' onClick={()=>{setOn(!on);}}><div className='switchToogleRight'>Выкл</div></div>
+			  <GM.Provider value = {{on: "Выключен"}}>
+				<div><Info/></div>
+			 </GM.Provider>
+			 </>
+			 
+			  }
+			 </>
+      )
+}
+
+function Info(props){
+  return (
+  <GM.Consumer> 
+  {(value)=> (
+  <div className="info">
+		Переключатель в положении {value.on}
+  </div>)}
+  </GM.Consumer>
+    );
+}
+
+ReactDOM.render(<Switch on={false}/>,
+  document.getElementById('root')
+);
+
+    </script>
+  </body>
+</html>
